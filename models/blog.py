@@ -195,4 +195,24 @@ class Tag(models.MemcachedModel):
     def get_name(self):
         return self.key().name()
     name = property(get_name)
+
+
+class Year(db.Model):
+    """Empty model for keeping track of years in which there are blog posts."""
     
+    MEMCACHE_KEY = "PS_Year_ALL"
+
+    @classmethod
+    def get_all_years(cls):
+        years = memcache.get(cls.MEMCACHE_KEY)
+        if years:
+            return years.split(',')
+        else:
+            years = sorted(x.key().name()[1:] for x in cls.all())
+            memcache.set(cls.MEMCACHE_KEY, ','.join(years))
+            return years
+
+    @classmethod
+    def get_or_insert(cls, key_name, **kwargs):
+        memcache.delete(cls.MEMCACHE_KEY)
+        return super(Year, cls).get_or_insert(key_name, **kwargs)

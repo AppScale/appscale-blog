@@ -223,6 +223,9 @@ def process_article_submission(handler, article_type):
              'amazon_items': handler.request.get('amazon_items')})
         process_embedded_code(article)
         article.put()
+        # Ensure there is a year entity for this entry's year
+        models.blog.Year.get_or_insert('Y%d' % (article.published.year,))
+        # Update tags
         for key in article.tag_keys:
             db.get(key).counter.increment()
         do_sitemap_ping()

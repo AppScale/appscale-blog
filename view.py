@@ -31,7 +31,7 @@ import urlparse
 from google.appengine.api import users
 from google.appengine.api import memcache
 
-from models.blog import Tag       # Might rethink if this is leaking into view
+from models.blog import Tag, Year   # Might rethink if this is leaking into view
 from utils import template
 import config
 
@@ -170,6 +170,7 @@ class ViewPage(object):
         NUM_FULL_RENDERS[path] += 1     # This lets us see % of cached views
                                         # in /admin/timings (see timings.py)
         tags = Tag.list()
+        years = Year.get_all_years()
 
         # Define some parameters it'd be nice to have in views by default.
         template_params = {
@@ -180,7 +181,8 @@ class ViewPage(object):
             "login_url": users.create_login_url(handler.request.uri),
             "logout_url": users.create_logout_url(handler.request.uri),
             "blog": config.BLOG,
-            "blog_tags": tags
+            "blog_tags": tags,
+            "archive_years": years,
         }
         template_params.update(config.PAGE)
         template_params.update(more_params)
