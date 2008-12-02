@@ -23,7 +23,6 @@
             <p><textarea id="message" name="message" cols="60" rows="10" tabindex="4">Please enter a message.</textarea></p>
             <p><input name="submit" type="image" src="/static/default/images/btn_submit.gif" alt="Submit" id="submit" tabindex="5" value="Submit" /></p>
             <input type="hidden" name="token" value="{{ token }}" />
-            <input type="hidden" name="curtime" value="{{ curtime|floatformat }}" />
         </form>
         {% endifequal %}
     </div>

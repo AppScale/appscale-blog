@@ -27,6 +27,7 @@ handlers for receiving the message through a HTTP POST.
 """
 __author__ = 'William T. Katz'
 
+import hmac
 import logging
 import string
 import time
@@ -37,25 +38,40 @@ from handlers import restful
 import view
 import config
 
-RANDOM_TOKEN = '08yzek30krn4l' + config.BLOG['root_url']
-
 class ContactHandler(restful.Controller):
     def get(self):
+        # Generate a token from the current time and its hmac, using the email
+        # address as key. This ensures that we will only accept submissions
+        # within a limited window, and that nobody can forge the token without
+        # knowing the destination email address anyway.
+        now = long(time.time())
+        hm = hmac.new(config.BLOG['email'], str(now)).hexdigest()
+        token = "%d:%s" % (now, hm)
+        
         user = users.get_current_user()
         # Don't use cache since we want to get current time for each post.
         view.ViewPage(cache_time=0). \
              render(self, {'email': user.email() if user else 'Required',
                            'nickname': user.nickname() if user else '',
-                           'token': RANDOM_TOKEN, 'curtime': time.time()})
+                           'token': token})
 
     def post(self):
         from google.appengine.api import mail
 
-        if self.request.get('token') != RANDOM_TOKEN or \
-           time.time() - string.atof(self.request.get('curtime')) < 2.0:
-            logging.info("Aborted contact mailing because form submission "
-                          "was less than 2 seconds.")
+        token = self.request.get('token', None)
+        validated = False
+        if ':' in token:
+            issued, hm = token.split(':')
+            age = time.time() - long(issued)
+            if hmac.new(config.BLOG['email'], str(issued)).hexdigest() == hm:
+                logging.info("Valid token found with age %d.", age)
+                if age >= 5 and age <= 3600:
+                    validated = True
+        if not validated:
+            logging.info("Aborted contact mailing because token was invalid or "
+                         "expired.")
             self.error(403)
+            return
 
         user = users.get_current_user()
         sender = user.email() if user else config.BLOG['email']
