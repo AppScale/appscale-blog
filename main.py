@@ -33,7 +33,10 @@ sys.path.insert(1, os.path.join(config.APP_ROOT_DIR, 'utils/external'))
 
 import logging
 import wsgiref.handlers
-from firepython.middleware import FirePythonWSGI
+try:
+    from firepython.middleware import FirePythonWSGI
+except:
+    pass
 from google.appengine.ext import webapp
 from google.appengine.api import users
 from handlers.bloog import blog, contact, cache_stats, timings
@@ -67,7 +70,10 @@ def main():
     path = timings.start_run()
     application = webapp.WSGIApplication(ROUTES, debug=config.DEBUG)
     if users.is_current_user_admin():
-        application = FirePythonWSGI(application)
+        try:
+            application = FirePythonWSGI(application)
+        except:
+            pass
     wsgiref.handlers.CGIHandler().run(application)
     timings.stop_run(path)
 
