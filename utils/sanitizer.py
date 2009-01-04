@@ -100,7 +100,7 @@ def sanitize_html(html='<p>No comment</p>', encoding=None,
         allow_attributes += attributes_for_trusted_source
         allow_tags += tags_for_trusted_source
 
-    if isinstance(html, unicode) and not encoding:
+    if isinstance(html, unicode): # and not encoding:
         logging.debug("Sanitizing unicode input.")
         soup = BeautifulSoup(html,  
                             convertEntities=BeautifulSoup.XHTML_ENTITIES)
