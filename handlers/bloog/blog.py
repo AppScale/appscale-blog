@@ -105,6 +105,7 @@ def get_tag_key(tag_name):
 def process_tag(tag_name, tags):
     # Check tag_name against all 'name' values in tags and coerce
     tag_name = tag_name.strip()
+    tag_name = unicode(tag_name)
     lowercase_name = tag_name.lower()
     for tag in tags:
         if lowercase_name == tag['name'].lower():
@@ -509,9 +510,7 @@ class BlogEntryHandler(restful.Controller):
 
 class TagHandler(restful.Controller):
     def get(self, encoded_tag):
-        tag =  re.sub('(%25|%)(\d\d)', 
-                      lambda cmatch: chr(string.atoi(cmatch.group(2), 16)),                 
-                      encoded_tag)   # No urllib.unquote in AppEngine?
+        tag = unicode(urllib.unquote(encoded_tag), config.BLOG["charset"])
         page = view.ViewPage()
         page.render_query(
             self, 'articles', 
