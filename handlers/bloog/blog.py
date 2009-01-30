@@ -105,7 +105,8 @@ def get_tag_key(tag_name):
 def process_tag(tag_name, tags):
     # Check tag_name against all 'name' values in tags and coerce
     tag_name = tag_name.strip()
-    tag_name = unicode(tag_name)
+    if not isinstance(tag_name, unicode):
+       tag_name = tag_name.decode(config.BLOG["charset"])
     lowercase_name = tag_name.lower()
     for tag in tags:
         if lowercase_name == tag['name'].lower():
@@ -118,7 +119,7 @@ def get_tags(tags_string):
         from models.blog import Tag
         tags = Tag.list()
         logging.debug("  tags = %s", tags)
-        return [process_tag(s, tags) 
+        return [process_tag(s, tags)
                 for s in tags_string.split(",") if s != '']
     return None
     
@@ -166,7 +167,10 @@ def process_article_edit(handler, permalink):
     body = handler.request.body
     params = cgi.parse_qs(body)
     for key,value in params.iteritems():
-        params[key] = value[0]
+        value0 = value[0]
+        if not isinstance(value0, unicode):
+            value0 = value0.decode(config.BLOG["charset"])
+        params[key] = value0
     property_hash = restful.get_sent_properties(params.get,
         ['title',
          ('body', get_sanitizer_func(handler, trusted_source=True)),
