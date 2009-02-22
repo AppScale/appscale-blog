@@ -234,14 +234,14 @@ def process_article_submission(handler, article_type):
 def process_comment_submission(handler, article):
     sanitize_comment = get_sanitizer_func(handler,
                                           allow_attributes=['href', 'src'],
-                                          blacklist_tags=['img'])
+                                          blacklist_tags=['img', 'script'])
     property_hash = restful.get_sent_properties(handler.request.get, 
-        ['name',
-         'email',
-         'homepage',
-         'title',
+        [('name', cgi.escape),
+         ('email', cgi.escape),
+         ('homepage', cgi.escape),
+         ('title', cgi.escape),
          ('body', sanitize_comment),
-         'key',
+         ('key', cgi.escape),
          'thread',    # If it's given, use it.  Else generate it.
          'captcha',
          ('published', get_datetime)])
@@ -533,9 +533,10 @@ class SearchHandler(restful.Controller):
                 self, 'articles', 
                 models.blog.Article.all().search(search_term). \
                     order('-published'), 
-                {'search_term': search_term, 'query_string': query_string})
+                {'search_term': cgi.escape(search_term),
+                 'query_string': query_string})
         except datastore_errors.NeedIndexError:
-            page.render(self, {'search_term': search_term,
+            page.render(self, {'search_term': cgi.escape(search_term),
                                'search_error_message': """
                                Sorry, full-text searches are currently limited
                                to single words until a later AppEngine update.

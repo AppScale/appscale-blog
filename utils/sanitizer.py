@@ -89,6 +89,7 @@ def sanitize_html(html='<p>No comment</p>', encoding=None,
     Raises:
       DangerousHTMLError if the supplied HTML has dangerous elements.
     """
+    logging.debug("input html is %s", html)
     if not allow_tags:
         allow_tags = acceptable_tags
     if not allow_attributes:
@@ -102,14 +103,12 @@ def sanitize_html(html='<p>No comment</p>', encoding=None,
 
     if isinstance(html, unicode): # and not encoding:
         logging.debug("Sanitizing unicode input.")
-        soup = BeautifulSoup(html,  
-                            convertEntities=BeautifulSoup.XHTML_ENTITIES)
+        soup = BeautifulSoup(html)
     else:
         if not encoding:
             encoding = 'latin-1'
         logging.debug("Sanitizing string input, assuming %s", encoding)
-        soup = BeautifulSoup(html.decode(encoding, 'ignore'),
-                             convertEntities=BeautifulSoup.XHTML_ENTITIES)
+        soup = BeautifulSoup(html.decode(encoding, 'ignore'))
     for comment in soup.findAll(
                     text = lambda text: isinstance(text, Comment)):
         comment.extract()
@@ -128,6 +127,7 @@ def sanitize_html(html='<p>No comment</p>', encoding=None,
                         raise DangerousHTMLError(html)
                 ok_attrs += [(attr, val)]
         tag.attrs = ok_attrs
+    logging.debug("output html is %s", soup.renderContents().decode('utf-8'))
     return soup.renderContents().decode('utf-8')
 
 def chop_up(text, chop_size=5):
