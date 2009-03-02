@@ -346,6 +346,7 @@ def render_article(handler, article):
             page.render(handler, { "two_columns": two_columns,
                                    "allow_comments": allow_comments,
                                    "article": article,
+								   "title": article.title,
                                    "captcha1": captcha[:3],
                                    "captcha2": captcha[3:6],
                                    "use_gravatars": config.BLOG['use_gravatars']
