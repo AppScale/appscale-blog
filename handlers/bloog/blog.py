@@ -321,7 +321,7 @@ def render_article(handler, article):
         try:
             accept_list = handler.request.headers['Accept']
         except KeyError:
-            logging.error("Had no accept header: %s", handler.request.headers)
+            logging.info("Had no accept header: %s", handler.request.headers)
             accept_list = None
         if accept_list and accept_list.split(',')[0] == 'application/json':
             handler.response.headers['Content-Type'] = 'application/json'
