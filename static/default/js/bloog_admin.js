@@ -68,6 +68,26 @@ YAHOO.bloog.initAdmin = function() {
             document.getElementById("postTags").value = article.tags.join(', ');
         }
         YAHOO.bloog.editor.setEditorHTML(article.body);
+        
+        if( YAHOO.bloog.editor.getEditorHTML != article.body )
+        {
+        	YAHOO.bloog.editor.saveHTML();
+        	document.getElementById("forced").value = "saved";
+        }
+        else
+        {
+        	document.getElementById("forced").value = "not saved";
+        }
+
+        if( YAHOO.bloog.editor.getEditorHTML != article.body )
+        {
+    		 document.getElementById("forced").value += " forced";
+        	 document.getElementById("postBody").value = article.body;
+        } else
+        {
+   		 	document.getElementById("forced").value += "not forced";
+        }
+        
         YAHOO.bloog.postDialog.render();
         YAHOO.bloog.postDialog.show();
     }

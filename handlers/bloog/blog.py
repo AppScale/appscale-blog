@@ -75,11 +75,11 @@ permalink_funcs = {
 def legacy_id_mapping(path, legacy_program):
     if legacy_program:
         if legacy_program == 'Drupal':
-            url_match = re.match('node/(\d+)/?$', path)
-            if url_match:
-                return db.Query(models.blog.Article). \
-                    filter('legacy_id =', url_match.group(1)). \
-                    get()
+			url_match = re.match('node/(\d+)/?$', path)
+			if url_match:
+				return db.Query(models.blog.Article). \
+					filter('legacy_id =', url_match.group(1)). \
+					get()
         elif legacy_program == 'Serendipity':
             url_match = re.match('archives/(\d+)-.*\.html$', path)
             if url_match:
@@ -403,8 +403,8 @@ class ArticleHandler(restful.Controller):
                 return
 
         # Check undated pages
-        article = db.Query(models.blog.Article). \
-                     filter('permalink =', path).get()
+            article = db.Query(models.blog.Article). \
+                         filter('permalink =', path).get()
 
         if not article:
             # This lets you map arbitrary URL patterns like /node/3
@@ -579,18 +579,22 @@ class MonthHandler(restful.Controller):
         
 class AtomHandler(webapp.RequestHandler):
     def get(self):
-        logging.debug("Sending Atom feed")
-        articles = db.Query(models.blog.Article). \
-                      filter('article_type =', 'blog entry'). \
-                      order('-published').fetch(limit=10)
-        updated = ''
-        if articles:
-            updated = articles[0].rfc3339_updated()
-        
-        self.response.headers['Content-Type'] = 'application/atom+xml'
-        page = view.ViewPage()
-        page.render(self, {"blog_updated_timestamp": updated, 
-                           "articles": articles, "ext": "xml"})
+        logging.debug("Agent: " + self.request.headers['User_Agent'])
+        if( self.request.headers['User_Agent'].lower().find('feedburner') == -1 ):
+            self.redirect("http://feeds.feedburner.com/IDontWantToGetOffOnARantHereBut")
+        else:
+            logging.debug("Sending Atom feed")
+            articles = db.Query(models.blog.Article). \
+                          filter('article_type =', 'blog entry'). \
+                          order('-published').fetch(limit=10)
+            updated = ''
+            if articles:
+                updated = articles[0].rfc3339_updated()
+            
+            self.response.headers['Content-Type'] = 'application/atom+xml'
+            page = view.ViewPage()
+            page.render(self, {"blog_updated_timestamp": updated, 
+                               "articles": articles, "ext": "xml"})
 
 class SitemapHandler(webapp.RequestHandler):
 	def get(self):

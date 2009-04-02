@@ -2294,4 +2294,4 @@ JS.MethodChain.prototype._ = JS.MethodChain.prototype._.wrap(function() {
     else return _.apply(this, args);
 });
 
-Ojay.VERSION = '0.2.0';
+Ojay.VERSION = '0.2.1';

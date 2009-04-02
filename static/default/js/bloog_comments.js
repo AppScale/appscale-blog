@@ -49,7 +49,7 @@ YAHOO.bloog.initComments = function() {
         YAHOO.bloog.commentDialog.hide();
     }
     var handleFailure = function(o) {
-        alert("Sorry, could not save comment!");
+        alert("Sorry, could not save comment! Check the CAPTCHA");
     }
     var handleSubmit = function() {
         YAHOO.bloog.commentEditor.saveHTML();

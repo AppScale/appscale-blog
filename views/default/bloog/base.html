@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="{{ blog.html_type }}; charset={{ blog.charset }}" />
         <title> {{ title }}</title>
         <meta name="generator" content="Bloog {{ bloog_version }}" />
+        <meta name="verify-v1" content="K+O2nFwH5Lg26LvnVJxrlkb31pSavfoBmifAq4a/l0k=" />
         <link rel="stylesheet" href="/static/default/style.css" type="text/css" media="screen" />
         <link rel="alternate" type="application/rss+xml" title="{{ blog.title }} RSS Feed" 
               href="{{ blog.root_url }}{{ blog.master_atom_url }}" />
@@ -18,7 +19,7 @@
             <div id="masthead" class="fix">
                 <h1><a href="/">{{ blog.title }}</a></h1>
                 <div id="authorBlurb">
-                    <img src="/static/default/images/avatar.png" alt="Avatar" />
+                    <img src="/static/custom/images/avatar.png" alt="Avatar" />
                     <p id="authorIntro">
                         {{ blog.description }}
                     </p>
@@ -97,7 +98,7 @@
 
                     {% block tags %}
                     <div class="middle_links">
-                        <h3>Categories</h3>
+                        <h3>Tags</h3>
                         <p class="tags">
                         {% if blog_tags %}
                             {% for tag in blog_tags %}
@@ -132,6 +133,7 @@
                     {% endif %}
 
                     {% block featuredPages1 %}
+					{% if false %}
                     <div class="middle_links">
                         <h3>{{ featuredMyPages.title }}</h3>
                         <p>
@@ -146,9 +148,11 @@
                             {% endfor %}
                         </ul>
                     </div>
+					{% endif %}
                     {% endblock %}
 
                     {% block featuredPages2 %}
+					{% if false %}
                     <div class="middle_links">
                         <h3>{{ featuredOthersPages.title }}</h3>
                         <p>
@@ -163,14 +167,12 @@
                             {% endfor %}
                         </ul>
                     </div>
+					{% endif %}
                     {% endblock %}
 
                     {% block subscribe %}
                     <div class="middle_links">
                         <h3>Subscribe</h3>
-                        <p>
-                            Stay updated on my meandering thoughts &amp; activities via Atom syndication.
-                        </p>
                         <ul>
                             <li>
                                 <a href="{{ blog.master_atom_url }}" title="Full content Atom feed">Atom feed</a>
@@ -234,7 +236,7 @@
                 </ul>
                 <div id="attribution">
                     <div id="downloadlinks">
-                        <p><a href="http://bloog.billkatz.com">Bloog</a> for 
+                        <p>Running a modified version of the <a href="http://github.com/Arachnid/bloog">Arachnid fork</a> of <a href="http://bloog.billkatz.com">Bloog</a> for 
                             <a href="http://code.google.com/appengine/">Google App Engine</a> is available at
                             <a href="http://github.com/DocSavage/bloog">GitHub</a> under an MIT license.</p>
                         <p>This template is an adapted version of 
@@ -265,3 +267,19 @@
         {% endblock %}
     </body>
 </html>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-62406-4");
+pageTracker._trackPageview();
+</script>
+
+{% if user_is_admin %}
+	<script type="text/javascript">
+		// don't report admin traffic in Analytics
+		pageTracker._setVar('no_report');
+	</script>
+{% endif %}

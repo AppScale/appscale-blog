@@ -123,7 +123,14 @@ var Rule = new JS.Class({
      * @param {Object} scope
      */
     initialize: function(node, keylist, callback, scope) {
+        var args = Array.from(arguments);
         node = Ojay(node).node;
+        if (!node) {
+            node     = document;
+            keylist  = args.shift();
+            callback = args.shift();
+            scope    = args.shift();
+        }
         if (scope) callback = callback.bind(scope);
         this._codes = codesFromKeys(keylist);
         this._listener = new KeyListener(node, hashFromCodes(this._codes), callback);
@@ -199,13 +206,21 @@ var Rule = new JS.Class({
  */
 Keyboard.RuleSet = new JS.Class({
     /**
+     * @param {HTMLElement} node
      * @param {Object} definitions
      */
-    initialize: function(definitions) {
+    initialize: function(node, definitions) {
+        var args = Array.from(arguments);
+        node = Ojay(node).node;
+        if (!node) {
+            node        = document;
+            definitions = args.shift();
+        }
+        this._node = node;
         this._rules = {};
         var keylist, rule;
         for (keylist in definitions) {
-            rule = new Rule(document, keylist, definitions[keylist]);
+            rule = new Rule(node, keylist, definitions[keylist]);
             // Store rules by signature to prevent duplicate key combinations
             this._rules[rule.getSignature()] = rule;
         }

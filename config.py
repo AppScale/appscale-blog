@@ -15,20 +15,20 @@ BLOG = {
     "bloog_version": "0.8",
     "html_type": "text/html",
     "charset": "utf-8",
-    "title": "Bloog",
-    "author": "Bill Katz",
+    "title": "I don't want to get off on a rant here, but....",
+    "author": "Matt Dragon",
     # This must be the email address of a registered administrator for the 
     # application due to mail api restrictions.
-    "email": "you@foo.com",
-    "description": "A RESTful Blog/Homepage for Google AppEngine.",
-    "root_url": "http://bloog.billkatz.com",
+    "email": "mdragon@gmail.com",
+    "description": "Technology, Programming, Complaints, etc.",
+    "root_url": "http://blog.web20studios.com",
     "master_atom_url": "/feeds/atom.xml",
     # By default, visitors can comment on article for this many days.
     # This can be overridden by setting article.allow_comments
     "days_can_comment": 60,
     # You can override this default for each page through a handler's call to 
     #  view.ViewPage(cache_time=...)
-    "cache_time": 0 if DEBUG else 3600,
+    "cache_time": 0, #if DEBUG else 3600,
 
     # Use the default YUI-based theme.
     # If another string is used besides 'default', calls to static files and
@@ -57,12 +57,12 @@ BLOG = {
 
 PAGE = {
     "title": BLOG["title"],
-    "articles_per_page": 5,
+    "articles_per_page": 20,
     "navlinks": [
-        { "title": "Articles", "description": "Bits of Info", 
-          "url": "/articles"},
-        { "title": "Contact", "description": "Send me a note", 
-          "url": "/contact"},
+        #{ "title": "Articles", "description": "Bits of Info", 
+         # "url": "/articles"} ,
+        #{ "title": "Contact", "description": "Send me a note", 
+          #"url": "/contact"},
     ],
     "featuredMyPages": {
         "title": "Bloog Development",

@@ -36,7 +36,7 @@ th,td{padding:3px 20px 3px 0px;}
 .popupDialog form{text-align: left;}
 .popupDialog form p{margin-bottom:7px;}
 .popupDialog form label{width: 400px;}
-.popupDialog form input{width: 400px;}
+.popupDialog form input{width: auto;}
 .popupDialog form textarea{width: 400px; margin:0px 5px;}
 
 /* masthead / footer - navigation and categories */
@@ -68,12 +68,12 @@ li.top a{width:100px;}
 #poweredby {float:right;width:120px;height:30px;}
 
 /* main - middle content and columns */
-#mid{}#mainCol{float:left;margin:26px 0 0 0;width:435px;}
+#mid{}#mainCol{float:left;margin:26px 0 0 0;width:600px;}
 #mid{}#twoCol{float:left;margin:26px 0 0 0;width:649px;}
 
 /* style individual sidebars */
 #midCol ul a{font-weight:bold;}
-#midCol{color:#444;float:left;margin:25px 0 0 33px;width:250px;line-height:1.3em;}
+#midCol{color:#444;float:left;margin:25px 0 0 33px;width:200px;line-height:1.3em;}
 #midCol p{color:#777;}
 #searchWrap,
 .middle_links{margin-bottom:20px;}
@@ -200,3 +200,16 @@ ol.pingslist{margin:1.5em 2em;font-size:12px;}
 .fix{display:inline-block;} 
 * html .fix{height:1%;}
 .fix{display:block;}
+
+/* customizations */
+
+#postDialog_c
+{
+	left: -1000px;
+	top: 0px;
+}
+
+#masthead h1 a, #authorIntro
+{
+width: auto;
+}
