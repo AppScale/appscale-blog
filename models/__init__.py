@@ -55,7 +55,7 @@ def to_dict(model_obj, attr_list, init_dict_func=None):
     in the above example.
     """
     values = {}
-    init_dict_func(values)
+    init_dict_func(model_obj, values)
     for token in attr_list:
         elems = token.split('.')
         value = getattr(model_obj, elems[0])
@@ -115,7 +115,7 @@ class SerializableModel(db.Model):
     json_does_not_include = []
 
     def to_json(self, attr_list=[]):
-        def to_entity(entity):
+        def to_entity(self, entity):
             """Convert datastore types in entity to 
                JSON-friendly structures."""
             my_to_entity(self, entity)
@@ -164,19 +164,9 @@ class MemcachedModel(SerializableModel):
         memcache.delete(self.__class__.memcache_key())
         return key
 
-    def to_entity(entity):
-        """Convert datastore types in entity to 
-        JSON-friendly structures."""
-        self._to_entity(entity)
-        logging.debug(dir(self.__class__))
-        for skipped_property in self.__class__.json_does_not_include:
-            del entity[skipped_property]
-        replace_datastore_types(entity)
-        values = to_dict(self, attr_list, to_entity)
-        
     def _to_repr(self):
         return repr(to_dict(self, self.__class__.list_includes, 
-                    my_to_entity(self)))
+                    my_to_entity))
 
     @classmethod
     def get_or_insert(cls, key_name, **kwds):
