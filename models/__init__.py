@@ -118,13 +118,30 @@ class SerializableModel(db.Model):
         def to_entity(entity):
             """Convert datastore types in entity to 
                JSON-friendly structures."""
-            self._to_entity(entity)
+            my_to_entity(self, entity)
             for skipped_property in self.__class__.json_does_not_include:
                 del entity[skipped_property]
             replace_datastore_types(entity)
         values = to_dict(self, attr_list, to_entity)
         return simplejson.dumps(values)
 
+def my_to_entity(self, entity):
+    """Copies information from this model to provided entity.
+
+    Args:
+    entity: Entity to save information on.
+    """
+    for prop in self.properties().values():
+        logging.debug("copying prop: " + prop.name)
+        datastore_value = prop.get_value_for_datastore(self)
+        if datastore_value == []:
+            try:
+                del entity[prop.name]
+            except KeyError:
+                pass
+        else:
+            entity[prop.name] = datastore_value
+    
 class MemcachedModel(SerializableModel):
     """MemcachedModel adds memcached all() retrieval through list().
     
@@ -147,9 +164,19 @@ class MemcachedModel(SerializableModel):
         memcache.delete(self.__class__.memcache_key())
         return key
 
+    def to_entity(entity):
+        """Convert datastore types in entity to 
+        JSON-friendly structures."""
+        self._to_entity(entity)
+        logging.debug(dir(self.__class__))
+        for skipped_property in self.__class__.json_does_not_include:
+            del entity[skipped_property]
+        replace_datastore_types(entity)
+        values = to_dict(self, attr_list, to_entity)
+        
     def _to_repr(self):
         return repr(to_dict(self, self.__class__.list_includes, 
-                    self._to_entity))
+                    my_to_entity(self)))
 
     @classmethod
     def get_or_insert(cls, key_name, **kwds):

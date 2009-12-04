@@ -169,8 +169,7 @@ class ViewPage(object):
             NUM_FULL_RENDERS[path] = 0
         NUM_FULL_RENDERS[path] += 1     # This lets us see % of cached views
                                         # in /admin/timings (see timings.py)
-        #tags = Tag.list()
-        tags = None
+        tags = Tag.list()
         years = Year.get_all_years()
 
         # Define some parameters it'd be nice to have in views by default.
