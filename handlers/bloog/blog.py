@@ -407,8 +407,8 @@ class ArticleHandler(restful.Controller):
                 return
 
         # Check undated pages
-            article = db.Query(models.blog.Article). \
-                         filter('permalink =', path).get()
+        article = db.Query(models.blog.Article). \
+                     filter('permalink =', path).get()
 
         if not article:
             # This lets you map arbitrary URL patterns like /node/3

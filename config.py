@@ -15,13 +15,13 @@ BLOG = {
     "bloog_version": "0.8",
     "html_type": "text/html",
     "charset": "utf-8",
-    "title": "I don't want to get off on a rant here, but....",
-    "author": "Matt Dragon",
+    "title": "The AppScale Blog",
+    "author": "AppScale Systems, Inc.",
     # This must be the email address of a registered administrator for the 
     # application due to mail api restrictions.
-    "email": "mdragon@gmail.com",
-    "description": "Technology, Programming, Complaints, etc.",
-    "root_url": "http://blog.web20studios.com",
+    "email": "chris@appscale.com",
+    "description": "Making Cloud Software Easy to Use",
+    "root_url": "http://blog.appscale.com",
     "master_atom_url": "/feeds/atom.xml",
     # By default, visitors can comment on article for this many days.
     # This can be overridden by setting article.allow_comments
@@ -59,30 +59,25 @@ PAGE = {
     "title": BLOG["title"],
     "articles_per_page": 20,
     "navlinks": [
-        #{ "title": "Articles", "description": "Bits of Info", 
-         # "url": "/articles"} ,
+        { "title": "Documentation",
+	  "description": "Documentation", 
+          "url": "/articles"} ,
         #{ "title": "Contact", "description": "Send me a note", 
           #"url": "/contact"},
     ],
     "featuredMyPages": {
-        "title": "Bloog Development",
-        "description": "Get involved",
+        "title": "Community",
+        "description": "Learn about AppScale",
         "entries": [
-            { "title": "Source Code", 
-              "url": "http://github.com/DocSavage/bloog", 
-              "description": "GitHub repository" },
-            { "title": "Tarball", 
-              "url": "http://github.com/DocSavage/bloog/tarball/master", 
-              "description": "Most recent snapshot" },
-            { "title": "Group", 
-              "url": "http://groups.google.com/group/bloog/topics", 
-              "description": "Developer discussion" },
-            { "title": "Author's Bloog", 
-              "url": "http://www.billkatz.com", 
-              "description": "What's brewing" },
-            { "title": "Architecture Diagram", 
-              "url": "/static/images/architecture2.png", 
-              "description": "RESTful Bloog" }
+            { "title": "Source", 
+              "url": "http://www.github.com/AppScale/appscale", 
+              "description": "AppScale" },
+            { "title": "Wiki", 
+              "url": "http://www.github.com/AppScale/appscale/wiki", 
+              "description": "An open-source cloud platform" },
+            { "title": "Mailing List", 
+              "url": "http://groups.google.com/group/appscale_community", 
+              "description": "AppScale Community" }
         ]
     },
     "featuredOthersPages": {

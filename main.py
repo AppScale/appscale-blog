@@ -27,6 +27,10 @@ import config
 import os
 import sys
 
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+from google.appengine.dist import use_library
+use_library('django', '0.96')
+
 # Force sys.path to have our own directory first, so we can import from it.
 sys.path.insert(0, config.APP_ROOT_DIR)
 sys.path.insert(1, os.path.join(config.APP_ROOT_DIR, 'utils/external'))

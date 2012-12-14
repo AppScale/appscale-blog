@@ -73,7 +73,7 @@ class Article(search.SearchableModel):
     tags = db.StringListProperty(default=[])
     tag_keys = db.ListProperty(db.Key, default=[])
     two_columns = db.BooleanProperty()
-    allow_comments = db.BooleanProperty()
+    allow_comments = False # db.BooleanProperty()
     hidden = db.BooleanProperty(default=False)
     # A list of languages for code embedded in article.
     # This lets us choose the proper javascript for pretty viewing.

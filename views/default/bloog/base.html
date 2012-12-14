@@ -12,6 +12,19 @@
         <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/container/assets/skins/sam/container.css" />
         {% block head %}
         {% endblock %}
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-21298141-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
     </head>
     <body class="yui-skin-sam">
         <div id="wrapper">
@@ -71,6 +84,21 @@
                 <!-- First column: Main content -->
                 {% block first_column %}
                 <div id="mainCol" class="fix"><a name="main"></a>
+                <p>AppScale is an open-source Platform-as-a-Service that 
+                automatically configures and deploys Google App Engine 
+                applications. It enables you to run App Engine apps on
+                your own virtualized clusters (with Xen, KVM, or
+                VirtualBox) or on cloud infrastructures (with Amazon
+                EC2 or Eucalyptus), without having to modify your
+                App Engine apps.</p>
+                <br />
+                <p>On the AppScale blog, we report how AppScale
+                integrates with popular software and runs it for you,
+                so that you don't have to learn how to become an expert
+                with each piece of software just to use it. Stay tuned
+                to see what AppScale can do for you!</p>
+                <br />
+                <h2>Recent Posts from the AppScale Team</h2>
                 {% for article in articles %}
                     {% include 'article_excerpt.html' %}
                 {% endfor %}
@@ -130,7 +158,6 @@
                     {% endif %}
 
                     {% block featuredPages1 %}
-					{% if false %}
                     <div class="middle_links">
                         <h3>{{ featuredMyPages.title }}</h3>
                         <p>
@@ -145,11 +172,10 @@
                             {% endfor %}
                         </ul>
                     </div>
-					{% endif %}
                     {% endblock %}
 
                     {% block featuredPages2 %}
-					{% if false %}
+					{% if true %}
                     <div class="middle_links">
                         <h3>{{ featuredOthersPages.title }}</h3>
                         <p>

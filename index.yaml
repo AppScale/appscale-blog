@@ -23,10 +23,10 @@ indexes:
   - name: published
     direction: desc
 
-- kind: Article
-  properties:
-  - name: published
-    direction: desc
+#- kind: Article
+#  properties:
+#  - name: published
+#    direction: desc
 
 - kind: Article
   properties:

@@ -1,0 +1,4 @@
+cron:
+- description: keep a cpu running
+  url: /
+  schedule: every 1 minutes
