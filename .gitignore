@@ -1,5 +1,3 @@
-*.pyc
 .DS_Store
-.project
-.pydevproject
-*~
+*.swp
+*.py[c|o]
