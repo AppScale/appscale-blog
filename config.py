@@ -69,15 +69,24 @@ PAGE = {
         "title": "Community",
         "description": "Learn about AppScale",
         "entries": [
+            { "title": "Our Web Site", 
+              "url": "http://www.appscale.com", 
+              "description": "What AppScale can do for you" },
+            { "title": "Community Site",
+              "url": "http://community.appscale.com", 
+              "description": "Check out what features we're working on!" },
+            { "title": "Download AppScale",
+              "url": "http://download.appscale.com", 
+              "description": "Download VirtualBox, Eucalyptus, and EC2 images"},
             { "title": "Source", 
               "url": "http://www.github.com/AppScale/appscale", 
-              "description": "AppScale" },
+              "description": "Fork us on GitHub!" },
             { "title": "Wiki", 
               "url": "http://www.github.com/AppScale/appscale/wiki", 
-              "description": "An open-source cloud platform" },
+              "description": "Read our documentation" },
             { "title": "Mailing List", 
               "url": "http://groups.google.com/group/appscale_community", 
-              "description": "AppScale Community" }
+              "description": "Join our community!" }
         ]
     },
     "featuredOthersPages": {
